@@ -1,0 +1,45 @@
+backend:
+  name: github
+  repo: FufuWei/jiangwei.github.io
+  branch: main
+  base_url: https://api.netlify.com
+  auth_endpoint: auth
+
+# 本地开发时可用 local backend（需运行 npx decap-server）
+# local_backend: true
+
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+locale: "zh_Hans"
+
+collections:
+  - name: "business"
+    label: "业务"
+    folder: "business"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "布局", name: "layout", widget: "hidden", default: "default" }
+      - { label: "标题", name: "title", widget: "string" }
+      - { label: "正文", name: "body", widget: "markdown" }
+
+  - name: "professional"
+    label: "专业"
+    folder: "professional"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "布局", name: "layout", widget: "hidden", default: "default" }
+      - { label: "标题", name: "title", widget: "string" }
+      - { label: "正文", name: "body", widget: "markdown" }
+
+  - name: "ai"
+    label: "AI"
+    folder: "ai"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "布局", name: "layout", widget: "hidden", default: "default" }
+      - { label: "标题", name: "title", widget: "string" }
+      - { label: "正文", name: "body", widget: "markdown" }
