@@ -1,3 +1,6 @@
+---
+layout: null
+---
 backend:
   name: github
   repo: FufuWei/jiangwei.github.io
@@ -15,7 +18,7 @@ collections:
     label: "业务"
     folder: "business"
     create: true
-    slug: "{{slug}}"
+    slug: "{% raw %}{{slug}}{% endraw %}"
     fields:
       - { label: "布局", name: "layout", widget: "hidden", default: "default" }
       - { label: "标题", name: "title", widget: "string" }
@@ -25,7 +28,7 @@ collections:
     label: "专业"
     folder: "professional"
     create: true
-    slug: "{{slug}}"
+    slug: "{% raw %}{{slug}}{% endraw %}"
     fields:
       - { label: "布局", name: "layout", widget: "hidden", default: "default" }
       - { label: "标题", name: "title", widget: "string" }
@@ -35,7 +38,7 @@ collections:
     label: "AI"
     folder: "ai"
     create: true
-    slug: "{{slug}}"
+    slug: "{% raw %}{{slug}}{% endraw %}"
     fields:
       - { label: "布局", name: "layout", widget: "hidden", default: "default" }
       - { label: "标题", name: "title", widget: "string" }
