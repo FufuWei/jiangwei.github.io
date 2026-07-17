@@ -6,35 +6,95 @@
   <title>{% if page.title %}{{ page.title }} - {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: #333; line-height: 1.6; }
-    .navbar { background: #2c3e50; padding: 0 2rem; display: flex; align-items: center; height: 56px; }
-    .navbar a { color: #ecf0f1; text-decoration: none; padding: 0 1rem; font-size: 1rem; line-height: 56px; }
-    .navbar a:hover, .navbar a.active { background: #34495e; color: #fff; }
-    .navbar .brand { font-weight: bold; font-size: 1.2rem; margin-right: 2rem; }
-    .container { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem; }
-    h1, h2, h3 { margin: 1.5rem 0 0.8rem; }
-    a { color: #2980b9; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    ul { padding-left: 1.5rem; }
-    li { margin: 0.3rem 0; }
-    .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
-    .card { border: 1px solid #ddd; border-radius: 8px; padding: 1.5rem; transition: box-shadow 0.2s; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: #333; line-height: 1.6; display: flex; min-height: 100vh; flex-direction: column; }
+
+    /* 顶栏 */
+    .topbar { background: #2c3e50; height: 48px; display: flex; align-items: center; padding: 0 1.5rem; flex-shrink: 0; }
+    .topbar .brand { color: #ecf0f1; font-weight: bold; font-size: 1.1rem; text-decoration: none; margin-right: 1.5rem; }
+    .topbar .toggle-btn { color: #ecf0f1; background: none; border: none; font-size: 1.2rem; cursor: pointer; margin-right: 1rem; display: none; }
+
+    /* 主区域 */
+    .main-wrap { display: flex; flex: 1; overflow: hidden; }
+
+    /* 侧边栏 */
+    .sidebar { width: 240px; background: #f7f8fa; border-right: 1px solid #e1e4e8; overflow-y: auto; flex-shrink: 0; padding: 1rem 0; }
+    .sidebar .nav-section { margin-bottom: 0.5rem; }
+    .sidebar .nav-section-title { display: flex; align-items: center; justify-content: space-between; padding: 0.4rem 1rem; font-weight: 600; font-size: 0.9rem; color: #555; cursor: pointer; user-select: none; }
+    .sidebar .nav-section-title:hover { background: #eaecef; }
+    .sidebar .nav-section-title .arrow { font-size: 0.7rem; transition: transform 0.2s; }
+    .sidebar .nav-section.collapsed .arrow { transform: rotate(-90deg); }
+    .sidebar .nav-section.collapsed .nav-items { display: none; }
+    .sidebar .nav-items { list-style: none; padding: 0; }
+    .sidebar .nav-items li a { display: block; padding: 0.3rem 1rem 0.3rem 1.8rem; color: #4a5568; text-decoration: none; font-size: 0.88rem; }
+    .sidebar .nav-items li a:hover { background: #e2e6ea; color: #2c3e50; }
+    .sidebar .nav-items li a.active { background: #dce4ec; color: #1a3a5c; font-weight: 600; }
+
+    /* 内容区 */
+    .content { flex: 1; overflow-y: auto; padding: 2rem 2.5rem; max-width: 800px; }
+    .content h1, .content h2, .content h3 { margin: 1.5rem 0 0.8rem; }
+    .content h1:first-child { margin-top: 0; }
+    .content a { color: #2980b9; text-decoration: none; }
+    .content a:hover { text-decoration: underline; }
+    .content ul { padding-left: 1.5rem; }
+    .content li { margin: 0.3rem 0; }
+    .content table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+    .content th, .content td { border: 1px solid #ddd; padding: 0.5rem 0.8rem; text-align: left; }
+    .content th { background: #f4f5f7; }
+    .content blockquote { border-left: 3px solid #2980b9; padding: 0.5rem 1rem; margin: 1rem 0; background: #f8f9fa; color: #555; }
+    .content code { background: #f1f3f5; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.9em; }
+    .content pre { background: #f6f8fa; padding: 1rem; border-radius: 5px; overflow-x: auto; margin: 1rem 0; }
+    .content pre code { background: none; padding: 0; }
+
+    /* 卡片 */
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.2rem; margin-top: 1.2rem; }
+    .card { border: 1px solid #ddd; border-radius: 8px; padding: 1.2rem; transition: box-shadow 0.2s; }
     .card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-    .card h3 { margin-top: 0; }
-    .card p { color: #666; font-size: 0.9rem; }
-    footer { text-align: center; padding: 2rem; color: #999; font-size: 0.85rem; border-top: 1px solid #eee; margin-top: 3rem; }
+    .card h3 { margin-top: 0; font-size: 1.05rem; }
+    .card p { color: #666; font-size: 0.88rem; }
+
+    footer { text-align: center; padding: 1.5rem; color: #999; font-size: 0.8rem; border-top: 1px solid #eee; flex-shrink: 0; }
+
+    /* 移动端 */
+    @media (max-width: 768px) {
+      .topbar .toggle-btn { display: inline-block; }
+      .sidebar { position: fixed; top: 48px; left: 0; bottom: 0; z-index: 100; transform: translateX(-100%); transition: transform 0.25s; }
+      .sidebar.open { transform: translateX(0); }
+      .content { padding: 1.5rem 1rem; }
+    }
   </style>
 </head>
 <body>
-  <nav class="navbar">
+  <div class="topbar">
+    <button class="toggle-btn" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776;</button>
     <a class="brand" href="{{ '/' | relative_url }}">{{ site.title }}</a>
-    {% for item in site.nav %}
-    <a href="{{ item.url | relative_url }}">{{ item.name }}</a>
-    {% endfor %}
-  </nav>
-  <div class="container">
-    {{ content }}
   </div>
+
+  <div class="main-wrap">
+    <aside class="sidebar">
+      {% for item in site.nav %}
+        {% if item.name != '首页' %}
+      <div class="nav-section">
+        <div class="nav-section-title" onclick="this.parentElement.classList.toggle('collapsed')">
+          <a href="{{ item.url | relative_url }}" style="color:inherit;text-decoration:none;flex:1;">{{ item.name }}</a>
+          <span class="arrow">&#9660;</span>
+        </div>
+        <ul class="nav-items">
+          {% assign section_path = item.url | remove_first: '/' | append: '/' %}
+          {% assign section_pages = site.pages | where_exp: "p", "p.path contains section_path" | where_exp: "p", "p.path != section_path | append: 'index.md'" | sort: "title" %}
+          {% for p in section_pages %}
+          <li><a href="{{ p.url | relative_url }}" class="{% if p.url == page.url %}active{% endif %}">{{ p.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+        {% endif %}
+      {% endfor %}
+    </aside>
+
+    <main class="content">
+      {{ content }}
+    </main>
+  </div>
+
   <footer>&copy; {{ site.time | date: "%Y" }} {{ site.title }}</footer>
 </body>
 </html>
