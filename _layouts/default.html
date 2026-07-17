@@ -79,8 +79,14 @@
           <span class="arrow">&#9660;</span>
         </div>
         <ul class="nav-items">
-          {% assign section_path = item.url | remove_first: '/' | append: '/' %}
-          {% assign section_pages = site.pages | where_exp: "p", "p.path contains section_path" | where_exp: "p", "p.path != section_path | append: 'index.md'" | sort: "title" %}
+          {% assign section_key = item.name | downcase %}
+          {% if section_key == '业务' %}
+            {% assign section_pages = site.pages | where_exp: "p", "p.path contains 'business/'" | where_exp: "p", "p.name != 'index.md'" | sort: "title" %}
+          {% elsif section_key == '专业' %}
+            {% assign section_pages = site.pages | where_exp: "p", "p.path contains 'professional/'" | where_exp: "p", "p.name != 'index.md'" | sort: "title" %}
+          {% elsif section_key == 'ai' or section_key == 'AI' %}
+            {% assign section_pages = site.pages | where_exp: "p", "p.path contains 'ai/'" | where_exp: "p", "p.name != 'index.md'" | sort: "title" %}
+          {% endif %}
           {% for p in section_pages %}
           <li><a href="{{ p.url | relative_url }}" class="{% if p.url == page.url %}active{% endif %}">{{ p.title }}</a></li>
           {% endfor %}

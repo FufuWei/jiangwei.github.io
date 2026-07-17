@@ -2,11 +2,8 @@ backend:
   name: github
   repo: FufuWei/jiangwei.github.io
   branch: main
-  base_url: https://api.netlify.com
-  auth_endpoint: auth
-
-# 本地开发时可用 local backend（需运行 npx decap-server）
-# local_backend: true
+  auth_type: pkce
+  app_id: ""
 
 media_folder: "assets/uploads"
 public_folder: "/assets/uploads"
