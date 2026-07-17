@@ -4,6 +4,8 @@ baseurl: "/jiangwei.github.io"
 url: "https://fufuwei.github.io"
 markdown: kramdown
 theme: minima
+include:
+  - admin
 
 # 导航菜单
 nav:
