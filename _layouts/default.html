@@ -71,29 +71,45 @@
 
   <div class="main-wrap">
     <aside class="sidebar">
-      {% for item in site.nav %}
-        {% if item.name != '首页' %}
+      {% assign biz_pages = site.pages | where: "dir", "/business/" | where_exp: "p", "p.name != 'index.md'" | sort: "title" %}
+      {% assign prof_pages = site.pages | where: "dir", "/professional/" | where_exp: "p", "p.name != 'index.md'" | sort: "title" %}
+      {% assign ai_pages = site.pages | where: "dir", "/ai/" | where_exp: "p", "p.name != 'index.md'" | sort: "title" %}
+
       <div class="nav-section">
         <div class="nav-section-title" onclick="this.parentElement.classList.toggle('collapsed')">
-          <a href="{{ item.url | relative_url }}" style="color:inherit;text-decoration:none;flex:1;">{{ item.name }}</a>
+          <a href="{{ '/business/' | relative_url }}" style="color:inherit;text-decoration:none;flex:1;">业务</a>
           <span class="arrow">&#9660;</span>
         </div>
         <ul class="nav-items">
-          {% assign section_key = item.name | downcase %}
-          {% if section_key == '业务' %}
-            {% assign section_pages = site.pages | where_exp: "p", "p.path contains 'business/'" | where_exp: "p", "p.name != 'index.md'" | sort: "title" %}
-          {% elsif section_key == '专业' %}
-            {% assign section_pages = site.pages | where_exp: "p", "p.path contains 'professional/'" | where_exp: "p", "p.name != 'index.md'" | sort: "title" %}
-          {% elsif section_key == 'ai' or section_key == 'AI' %}
-            {% assign section_pages = site.pages | where_exp: "p", "p.path contains 'ai/'" | where_exp: "p", "p.name != 'index.md'" | sort: "title" %}
-          {% endif %}
-          {% for p in section_pages %}
+          {% for p in biz_pages %}
           <li><a href="{{ p.url | relative_url }}" class="{% if p.url == page.url %}active{% endif %}">{{ p.title }}</a></li>
           {% endfor %}
         </ul>
       </div>
-        {% endif %}
-      {% endfor %}
+
+      <div class="nav-section">
+        <div class="nav-section-title" onclick="this.parentElement.classList.toggle('collapsed')">
+          <a href="{{ '/professional/' | relative_url }}" style="color:inherit;text-decoration:none;flex:1;">专业</a>
+          <span class="arrow">&#9660;</span>
+        </div>
+        <ul class="nav-items">
+          {% for p in prof_pages %}
+          <li><a href="{{ p.url | relative_url }}" class="{% if p.url == page.url %}active{% endif %}">{{ p.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title" onclick="this.parentElement.classList.toggle('collapsed')">
+          <a href="{{ '/ai/' | relative_url }}" style="color:inherit;text-decoration:none;flex:1;">AI</a>
+          <span class="arrow">&#9660;</span>
+        </div>
+        <ul class="nav-items">
+          {% for p in ai_pages %}
+          <li><a href="{{ p.url | relative_url }}" class="{% if p.url == page.url %}active{% endif %}">{{ p.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
     </aside>
 
     <main class="content">
