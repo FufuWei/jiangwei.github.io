@@ -71,45 +71,23 @@
 
   <div class="main-wrap">
     <aside class="sidebar">
-      {% assign biz_pages = site.pages | where: "dir", "/business/" | where_exp: "p", "p.name != 'index.md'" | sort: "title" %}
-      {% assign prof_pages = site.pages | where: "dir", "/professional/" | where_exp: "p", "p.name != 'index.md'" | sort: "title" %}
-      {% assign ai_pages = site.pages | where: "dir", "/ai/" | where_exp: "p", "p.name != 'index.md'" | sort: "title" %}
-
+      {% for item in site.nav %}
+        {% if item.name != '首页' %}
       <div class="nav-section">
         <div class="nav-section-title" onclick="this.parentElement.classList.toggle('collapsed')">
-          <a href="{{ '/business/' | relative_url }}" style="color:inherit;text-decoration:none;flex:1;">业务</a>
+          <a href="{{ item.url | relative_url }}" style="color:inherit;text-decoration:none;flex:1;">{{ item.name }}</a>
           <span class="arrow">&#9660;</span>
         </div>
         <ul class="nav-items">
-          {% for p in biz_pages %}
+          {% assign item_dir = item.url | prepend: '/' | append: '/' %}
+          {% assign section_pages = site.pages | where: "dir", item_dir | where_exp: "p", "p.name != 'index.md'" | sort: "title" %}
+          {% for p in section_pages %}
           <li><a href="{{ p.url | relative_url }}" class="{% if p.url == page.url %}active{% endif %}">{{ p.title }}</a></li>
           {% endfor %}
         </ul>
       </div>
-
-      <div class="nav-section">
-        <div class="nav-section-title" onclick="this.parentElement.classList.toggle('collapsed')">
-          <a href="{{ '/professional/' | relative_url }}" style="color:inherit;text-decoration:none;flex:1;">专业</a>
-          <span class="arrow">&#9660;</span>
-        </div>
-        <ul class="nav-items">
-          {% for p in prof_pages %}
-          <li><a href="{{ p.url | relative_url }}" class="{% if p.url == page.url %}active{% endif %}">{{ p.title }}</a></li>
-          {% endfor %}
-        </ul>
-      </div>
-
-      <div class="nav-section">
-        <div class="nav-section-title" onclick="this.parentElement.classList.toggle('collapsed')">
-          <a href="{{ '/ai/' | relative_url }}" style="color:inherit;text-decoration:none;flex:1;">AI</a>
-          <span class="arrow">&#9660;</span>
-        </div>
-        <ul class="nav-items">
-          {% for p in ai_pages %}
-          <li><a href="{{ p.url | relative_url }}" class="{% if p.url == page.url %}active{% endif %}">{{ p.title }}</a></li>
-          {% endfor %}
-        </ul>
-      </div>
+        {% endif %}
+      {% endfor %}
     </aside>
 
     <main class="content">
