@@ -3,7 +3,7 @@ backend:
   repo: FufuWei/jiangwei.github.io
   branch: main
   auth_type: pkce
-  app_id: ""
+  app_id: "Ov23li5Op2IDBOT9Lugo"
 
 media_folder: "assets/uploads"
 public_folder: "/assets/uploads"
