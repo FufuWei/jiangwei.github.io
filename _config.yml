@@ -4,6 +4,7 @@ baseurl: "/jiangwei.github.io"
 url: "https://fufuwei.github.io"
 markdown: kramdown
 theme: minima
+
 include:
   - admin
 
@@ -25,3 +26,8 @@ defaults:
       type: "pages"
     values:
       layout: "default"
+  - scope:
+      path: "admin"
+      type: "pages"
+    values:
+      layout: null
