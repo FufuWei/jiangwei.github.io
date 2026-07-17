@@ -1,12 +1,27 @@
 ---
 layout: default
-title: 我的学习笔记
+title: 首页
 ---
 
-# 👋 欢迎来到我的知识库
+# 我的知识库
 
-这里将存放我所有的学习过程记录。
+欢迎来到我的个人知识库，这里按模块分类沉淀学习笔记和经验总结。
 
-## 近期学习内容
-- 正在学习：[你的科目]
-- 今日心得：[写几句]
+<div class="card-grid">
+
+<div class="card">
+<h3><a href="{{ '/business/' | relative_url }}">业务</a></h3>
+<p>业务领域知识、流程梳理、项目经验与复盘</p>
+</div>
+
+<div class="card">
+<h3><a href="{{ '/professional/' | relative_url }}">专业</a></h3>
+<p>技术专业能力、架构设计、最佳实践与问题排查</p>
+</div>
+
+<div class="card">
+<h3><a href="{{ '/ai/' | relative_url }}">AI</a></h3>
+<p>人工智能、大模型应用、提示工程与AI工具</p>
+</div>
+
+</div>

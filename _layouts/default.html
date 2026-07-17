@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title %}{{ page.title }} - {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: #333; line-height: 1.6; }
+    .navbar { background: #2c3e50; padding: 0 2rem; display: flex; align-items: center; height: 56px; }
+    .navbar a { color: #ecf0f1; text-decoration: none; padding: 0 1rem; font-size: 1rem; line-height: 56px; }
+    .navbar a:hover, .navbar a.active { background: #34495e; color: #fff; }
+    .navbar .brand { font-weight: bold; font-size: 1.2rem; margin-right: 2rem; }
+    .container { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem; }
+    h1, h2, h3 { margin: 1.5rem 0 0.8rem; }
+    a { color: #2980b9; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    ul { padding-left: 1.5rem; }
+    li { margin: 0.3rem 0; }
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
+    .card { border: 1px solid #ddd; border-radius: 8px; padding: 1.5rem; transition: box-shadow 0.2s; }
+    .card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .card h3 { margin-top: 0; }
+    .card p { color: #666; font-size: 0.9rem; }
+    footer { text-align: center; padding: 2rem; color: #999; font-size: 0.85rem; border-top: 1px solid #eee; margin-top: 3rem; }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <a class="brand" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+    {% for item in site.nav %}
+    <a href="{{ item.url | relative_url }}">{{ item.name }}</a>
+    {% endfor %}
+  </nav>
+  <div class="container">
+    {{ content }}
+  </div>
+  <footer>&copy; {{ site.time | date: "%Y" }} {{ site.title }}</footer>
+</body>
+</html>
