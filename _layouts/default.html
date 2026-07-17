@@ -79,7 +79,7 @@
           <span class="arrow">&#9660;</span>
         </div>
         <ul class="nav-items">
-          {% assign item_dir = item.url | prepend: '/' | append: '/' %}
+          {% assign item_dir = item.url %}
           {% assign section_pages = site.pages | where: "dir", item_dir | where_exp: "p", "p.name != 'index.md'" | sort: "title" %}
           {% for p in section_pages %}
           <li><a href="{{ p.url | relative_url }}" class="{% if p.url == page.url %}active{% endif %}">{{ p.title }}</a></li>
